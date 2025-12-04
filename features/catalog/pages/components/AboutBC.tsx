@@ -1,0 +1,31 @@
+import Link from "next/link"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+
+export default function CatalogBread (){
+    return (
+        <div >
+            <Breadcrumb>
+                <BreadcrumbList className="text-black">
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild >
+                            <Link href="/">Home</Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator/>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link href="/about">About us</Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+        </div>
+    )
+}
