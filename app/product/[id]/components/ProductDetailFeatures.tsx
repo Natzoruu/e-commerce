@@ -24,7 +24,7 @@ export default function ProductDetailFeatures(card : FeatureCardProps)
                     <div className="grid grid-cols-4 w-full">
                         {card.features.map((itm , idx) =>(
                             <div className="flex flex-col justify-center items-center space-y-3" key={idx}>
-                                <div className="w-50 h-50 rounded-full bg-black flex items-center justify-center">
+                                <div className="w-50 h-50 rounded-full bg-white flex items-center justify-center">
                                     <Image src={itm.icon}
                                     width={81}
                                     height={81}

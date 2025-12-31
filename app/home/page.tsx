@@ -1,16 +1,17 @@
 "use client"
 import Image from "next/image"
 import CardThumbnail from "@/components/ui/CardThumbnail"
-import { TemporaryDataProducts } from "@/types/TemporaryDataProducts"
+import { useProducts } from "@/hooks/useProducts"
 import FeaturedSection from "@/components/ui/FeaturedHomeSection"
 import { LogoBrandList } from "./data/BrandLogoArr"
 import { TestimonialComponent } from "@/features/catalog/components/testimonial"
-import { Headset } from "lucide-react";
+import { Headset, UserIcon, ShoppingCart } from "lucide-react";
 import "swiper/css";
 import "swiper/css/pagination";
 import Zip from "@/components/ui/Zip"
 
 export default function Homepage() {
+  const { products , loading } = useProducts()
   return(
     <div className="max-w-[1400px] w-full mx-auto flex flex-col">
       <div className="space-y-4">
@@ -28,9 +29,13 @@ export default function Homepage() {
             <a className="text-blue-600 underline underline-offset-4 cursor-pointer">See all new products</a>
           </div>
           <div className="grid grid-cols-6 gap-0 overflow-visible">
-            {TemporaryDataProducts.map((product)=>(
-              <CardThumbnail key={product.id} product={product}/>
-            ))}
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              products.filter((product)=>product.featured).slice(0 , 6).map((product)=>(
+                <CardThumbnail key={product.id} product={product}/>
+              ))
+            )}
           </div>
         </div>
         <Zip/>
@@ -38,23 +43,23 @@ export default function Homepage() {
           <FeaturedSection
             title="Custom Builds"
             imgSource="/images/CustomBuild.png"
-            productArray={TemporaryDataProducts}
+            productArray={products.filter((product)=>product.category === "Desktops")}
             link="#"
           />
         </div>
         <div>
           <FeaturedSection
-            title="MSI Laptops"
+            title="MSI"
             imgSource="/images/LaptopMsi.png"
-            productArray={TemporaryDataProducts}
+            productArray={products.filter((product)=>product.brand === "MSI")}
             link="#"
           />
         </div>
         <div>
           <FeaturedSection
-            title="Desktops"
+            title="PC Parts"
             imgSource="/images/Desktops.png"
-            productArray={TemporaryDataProducts}
+            productArray={products.filter((product)=>product.category === "PC Parts")}
             link="#"
           />
         </div>
@@ -62,12 +67,12 @@ export default function Homepage() {
           <FeaturedSection
             title="Gaming Monitors"
             imgSource="/images/GamingMonitors.png"
-            productArray={TemporaryDataProducts}
+            productArray={products.filter((product)=>product.category === "Monitors")}
             link="#"
           />
         </div>
         <div className="w-full grid grid-cols-7 h-37 items-center justify-center">
-          {LogoBrandList.map((obj , idx)=>(
+          {LogoBrandList.slice(0 , 7).map((obj , idx)=>(
             <div key={idx} className="relative w-full h-full hover:bg-blue-50 transition duration-300">
               <a href={obj.url}>
                 <Image
@@ -91,12 +96,12 @@ export default function Homepage() {
               <p className="font-normal text-sm opacity-70 px-20">Up to 3 years on-site warranty available for your peace of mind.</p>
             </div>
             <div className="flex flex-col text-center justify-center items-center gap-y-2">
-              <div className="h-23   w-23  rounded-full bg-blue-600 flex items-center justify-center"><Headset size={45} color="#fff"/></div>
+              <div className="h-23   w-23  rounded-full bg-blue-600 flex items-center justify-center"><UserIcon size={45} color="#fff"/></div>
               <h1 className="font-bold text-xl">Personal Account</h1>
               <p className="font-normal text-sm opacity-70 px-20">With big discounts, free delivery and a dedicated support specialist.</p>
             </div>
             <div className="flex flex-col text-center justify-center items-center gap-y-2">
-              <div className="h-23   w-23  rounded-full bg-blue-600 flex items-center justify-center"><Headset size={45} color="#fff"/></div>
+              <div className="h-23   w-23  rounded-full bg-blue-600 flex items-center justify-center"><ShoppingCart size={45} color="#fff"/></div>
               <h1 className="font-bold text-xl">Amazing Savings</h1>
               <p className="font-normal text-sm opacity-70 px-20">Up to 70% off new Products, you can be sure of the best price.</p>
             </div>

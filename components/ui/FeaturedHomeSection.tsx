@@ -1,11 +1,12 @@
-import { TemporaryDataProducts, TemporaryProducts } from "@/types/TemporaryDataProducts";
+import { Database } from "@/types/supabase";
 import Image from "next/image";
 import CardThumbnail from "./CardThumbnail";
+type dataProducts = Database["public"]["Tables"]["products"]["Row"];
 
 interface FeaturedSectionElements{
     title : string;
     imgSource : string;
-    productArray : TemporaryProducts[];
+    productArray : dataProducts[];
     link : string;
 }
 export default function FeaturedSection ({

@@ -6,6 +6,8 @@ import Image from "next/image";
 import Zip from "@/components/ui/Zip";
 import CatalogBread from "@/features/catalog/pages/components/CatalogBreadcrumb";
 import { useState } from "react";
+import clsx from "clsx";
+import { motion } from "framer-motion";
 
 interface specsProps {
     cpu : string;
@@ -37,8 +39,7 @@ export default function ProductDetail(card : cardProps){
                     <div className="flex items-center space-x-6">
                         {DetailsSections.map((itm , idx ) => (
                             <div key={idx}>
-                                <button onClick={()=>setView(itm.title)} className="font-semibold cursor-pointer">{itm.title}</button>
-                                {}
+                                <button onClick={()=>setView(itm.title)} className={clsx("font-semibold cursor-pointer transition-all duration-300", view === itm.title ? "text-black underline underline-offset-5" : "text-neutral-500")}>{itm.title}</button>
                             </div>
                         ))}
                     </div>
@@ -57,23 +58,23 @@ export default function ProductDetail(card : cardProps){
                             {card.name}
                         </h1>
                         {view === "About Product" && (
-                        <div>
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} >
                             <p className="text-sm md:text-base text-black leading-relaxed max-w-xl">
                                 {card.description}
                             </p>
-                        </div>
+                        </motion.div>
                         ) }
                         {view === "Details" && (
-                            <div >
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} >
                                 {Object.entries(card.specs).map(([key , value])=>(
                                     <li className="list-item list-disc" key={key}>
                                         <span className="text-sm md:text-base text-black leading-relaxed max-w-xl">{value}</span>
                                     </li>
                                 ))}
-                            </div>
+                            </motion.div>
                         ) }
                         {view === "Specs" && (
-                        <div className="border border-gray-300 rounded-md w-full max-w-3xl">
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="border border-gray-300 rounded-md w-full max-w-3xl">
                             <div className="grid grid-cols-3 px-4 py-3 border-b bg-white">
                                 <span className="font-medium col-span-1">Weight</span>
                                 <span className="text-gray-500">{card.weight}</span>
@@ -90,7 +91,7 @@ export default function ProductDetail(card : cardProps){
                                 <span className="font-medium">Material</span>
                                 <span className="text-gray-500">{card.material}</span>
                             </div>
-                        </div>
+                        </motion.div>
                         ) }
                         <div className="text-sm text-gray-400 flex justify-between">
                             <div>

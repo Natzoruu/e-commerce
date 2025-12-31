@@ -3,7 +3,7 @@ import ProductCardWide from "../components/ProductCardWide"
 import CatalogBreadcrumb from "./components/CatalogBreadcrumb"
 import Image from "next/image"
 import Link from "next/link"
-import { useProducts } from "../hooks/useProduct"
+import { useProducts } from "../../../hooks/useProducts"
 import { Circle } from "lucide-react"
 import { useState } from "react"
 import { colorGroups } from "../components/colorGroup"
@@ -17,6 +17,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Database } from "@/types/supabase"
+type Product = Database["public"]["Tables"]["products"]["Row"]
 
 
 export default function CatalogPageUi (){
@@ -60,7 +62,7 @@ export default function CatalogPageUi (){
         return true
     })
     
-   function productTotalPreview (productList : any[], category : string) {
+   function productTotalPreview (productList : Product[], category : string) {
         return productList.filter( p => p.category === category).length;
     }
 
@@ -152,7 +154,7 @@ export default function CatalogPageUi (){
                     </div>
                     <div className="col-span-5 transition-all duration-200 ease-in-out">
                         {paginatedProducts.map((item , idx) =>(
-                            <ProductCardWide key={idx} name={item.name} price={item.price} image={item.image} description={item.description} isAvailable={item.isAvailable} rating={item.rating}/>
+                            <ProductCardWide key={idx} name={item.name} price={item.price} image={item.image_url} description={item.description} isAvailable={item.is_available} rating={item.rating}/>
                         ))}
                         <div className="my-4">
                             <Pagination>

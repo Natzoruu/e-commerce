@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { TemporaryProducts } from "@/types/TemporaryDataProducts";
+import { Database } from "@/types/supabase";
 import { CircleCheck, XCircle, StarIcon, ShoppingCart } from "lucide-react";
+type productsData = Database['public']['Tables']['products']['Row']
 
 interface CardProps {
-  product: TemporaryProducts;
+  product: productsData;
 }
 
 export default function CardThumbnail({ product }: CardProps) {
@@ -18,7 +19,7 @@ export default function CardThumbnail({ product }: CardProps) {
   "
 >
   <div className="flex items-center gap-x-2 mb-2">
-    {product.isAvailable ? (
+    {product.is_available ? (
       <>
         <CircleCheck size={11} className="text-green-600" />
         <p className="text-[10px] text-green-600">In stock</p>
@@ -32,7 +33,7 @@ export default function CardThumbnail({ product }: CardProps) {
   </div>
   <div className="relative w-full aspect-square overflow-hidden rounded-md">
     <Image
-      src={product.image}
+      src={product.image_url}
       fill
       alt=""
       className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -80,6 +81,5 @@ export default function CardThumbnail({ product }: CardProps) {
     </button>
   </div>
 </div>
-
   );
 }
